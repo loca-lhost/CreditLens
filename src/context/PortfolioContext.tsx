@@ -80,6 +80,7 @@ type PortfolioAction =
   | { type: 'SET_PIPELINE_STEP'; id: string; status: string }
   | { type: 'SET_OFFICER_FILTER'; officer: string }
   | { type: 'RESTORE_SNAPSHOT'; loans: Loan[]; meta: Record<string, ProductMeta>; headers: string[]; fileName: string; officerMap?: Record<string, string> }
+  | { type: 'BULK_UPDATE'; updates: Array<{ acct: string; arrears: number; dpd: number }> }
 
 function createInitialNLQFilters(): NLQFilters {
   return {
@@ -234,6 +235,24 @@ function portfolioReducer(state: PortfolioState, action: PortfolioAction): Portf
         officerMap: action.officerMap || state.officerMap,
         allHeaders: action.headers,
       }
+    }
+    case 'BULK_UPDATE': {
+      const acctMap = new Map<string, number>()
+      state.loans.forEach((r, i) => {
+        const k1 = (r.repAcct || '').trim().toLowerCase()
+        if (k1) acctMap.set(k1, i)
+        const k2 = (r.applId || '').trim().toLowerCase()
+        if (k2 && !acctMap.has(k2)) acctMap.set(k2, i)
+      })
+      const loans = state.loans.map(r => ({ ...r }))
+      let matched = 0
+      for (const upd of action.updates) {
+        const idx = acctMap.get(upd.acct.toLowerCase())
+        if (idx === undefined) continue
+        loans[idx] = { ...loans[idx], overdue: upd.arrears, dpd: upd.dpd }
+        matched++
+      }
+      return { ...state, loans, page: 1 }
     }
     default:
       return state

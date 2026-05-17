@@ -4,12 +4,13 @@ import { useApp } from '@/context/AppContext'
 import { generateXLSX, generateXLSXWithSummary, generateCSVText, downloadText, getExportFilename } from '@/lib/export'
 import { generateSchedule as genSchedule } from '@/lib/schedule'
 import { generateExportSummary } from '@/lib/ai/insights'
+import { openPrintSummary } from '@/lib/print'
 import Button from '@/components/shared/Button'
 import styles from './Toolbar.module.css'
 
 type ExportFormat = 'xlsx' | 'csv' | 'text'
 
-export default function Toolbar() {
+export default function Toolbar({ onBulkImport }: { onBulkImport: () => void }) {
   const { state, dispatch, filteredLoans } = usePortfolio()
   const { showToast } = useApp()
   const [exportFiltered, setExportFiltered] = useState(true)
@@ -99,6 +100,10 @@ export default function Toolbar() {
     showToast('Application reset', 'ok')
   }, [dispatch, showToast])
 
+  const handlePrint = useCallback(() => {
+    openPrintSummary(exportFiltered ? filteredLoans : state.loans)
+  }, [exportFiltered, filteredLoans, state.loans])
+
   const toggleCol = useCallback((key: string) => {
     dispatch({ type: 'TOGGLE_COL', key })
     localStorage.setItem('creditlens_visible_cols', JSON.stringify([...state.visibleCols]))
@@ -176,9 +181,17 @@ export default function Toolbar() {
         </div>
       </div>
 
+      <Button variant="secondary" onClick={onBulkImport} aria-label="Bulk Import">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 5 17 10"/><line x1="12" y1="5" x2="12" y2="17"/></svg>
+        Bulk Import
+      </Button>
       <Button variant="secondary" onClick={handleGenerateSchedule} aria-label="Schedule">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Schedule
+      </Button>
+      <Button variant="secondary" onClick={handlePrint} aria-label="Print Summary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
       </Button>
       <Button variant="danger" onClick={handleReset} aria-label="Reset">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M3 12a9 9 0 109-9M3 3v4h4"/></svg>

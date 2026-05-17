@@ -37,6 +37,15 @@ const STATUS_COLORS: Record<string, string> = {
   Resolved: 'var(--orange)',
 }
 
+const STATUS_TRENDS: Record<string, string> = {
+  Recovered: '▼ Improvement',
+  Worsening: '▲ At Risk',
+  Stable: '— No Change',
+  New: '+ Portfolio Growth',
+  Resolved: '✓ Fully Paid',
+  All: 'Across Portfolio',
+}
+
 interface CompCol {
   l: string
   k: keyof import('@/types').ComparisonResult
@@ -71,6 +80,7 @@ export default function ComparePage() {
   const [aiError, setAiError] = useState<string | null>(null)
   const [logEntries, setLogEntries] = useState<LogEntry[]>([])
   const [exporting, setExporting] = useState(false)
+  const [compExportFiltered, setCompExportFiltered] = useState(true)
   const [compPage, setCompPage] = useState(1)
 
   const addLog = useCallback((message: string, type: LogEntry['type'] = 'info') => {
@@ -147,14 +157,14 @@ export default function ComparePage() {
 
   const handleExport = useCallback(async () => {
     if (exporting) return
-    const rows = getFilteredResults()
+    const rows = compExportFiltered ? getFilteredResults() : results
     if (!rows.length) { showToast('No data', 'fail'); return }
     const fn = getExportFilename('CreditLens_Comparison')
     setExporting(true)
     await exportComparisonXLSX(rows, fn)
     setExporting(false)
     showToast(`${rows.length} rows → ${fn}`, 'ok')
-  }, [exporting, getFilteredResults, showToast])
+  }, [exporting, compExportFiltered, getFilteredResults, results, showToast])
 
   const filtered = getFilteredResults()
   const compTotalPages = Math.max(1, Math.ceil(filtered.length / COMP_PAGE_SIZE))
@@ -214,8 +224,8 @@ export default function ComparePage() {
           </div>
 
           <div className={styles.statusGrid}>
-            {['Recovered', 'Worsening', 'Stable', 'New', 'Resolved'].map(s => {
-              const count = results.filter(r => r.status === s).length
+            {(['Recovered', 'Worsening', 'Stable', 'New', 'Resolved', 'All'] as const).map(s => {
+              const count = s === 'All' ? results.length : results.filter(r => r.status === s).length
               const isActive = filter === s
               return (
                 <div
@@ -223,8 +233,9 @@ export default function ComparePage() {
                   className={`${styles.statusCard} ${isActive ? styles.active : ''}`}
                   onClick={() => setFilter(isActive ? 'All' : s)}
                 >
-                  <div className={styles.statusLabel}>{s}</div>
-                  <div className={styles.statusValue} style={{ color: STATUS_COLORS[s] }}>{count}</div>
+                  <div className={styles.statusLabel}>{s === 'All' ? 'Total Impact' : s}</div>
+                  <div className={styles.statusValue} style={{ color: s === 'All' ? 'var(--text)' : STATUS_COLORS[s] }}>{count}</div>
+                  <div className={styles.statusTrend}>{STATUS_TRENDS[s]}</div>
                 </div>
               )
             })}
@@ -306,6 +317,14 @@ export default function ComparePage() {
           />
 
           <div className={styles.toolbar}>
+            <label className={styles.exportFilterCheck}>
+              <input
+                type="checkbox"
+                checked={compExportFiltered}
+                onChange={e => setCompExportFiltered(e.target.checked)}
+              />
+              Export current view only
+            </label>
             <Button variant="primary" onClick={handleExport} disabled={exporting}>
               Export Comparison
               <span className={styles.toolbarCount}>{filtered.length}</span>

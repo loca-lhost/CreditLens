@@ -276,3 +276,17 @@
   font-weight: 600;
   margin-bottom: 2px;
 }
+
+.statusTrend {
+  font-size: 10px;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+.exportFilterCheck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}

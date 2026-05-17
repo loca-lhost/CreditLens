@@ -49,7 +49,7 @@ export default function ProductBreakdown() {
               <div className={styles.nameLabel}>{name}</div>
               <div className={styles.countValue} style={{ color: c.color }}>{p.count}</div>
               {p.overdue > 0
-                ? <div className={styles.overdueText}>⚠ {p.overdueCount} overdue · GHS {fmt(p.overdue)}</div>
+                ? <div className={styles.overdueText}>⚠ {p.overdueCount} overdue ({Math.round(p.overdueCount / p.count * 100)}%) · GHS {fmt(p.overdue)}</div>
                 : <div className={styles.noOverdue}>✓ No overdue</div>
               }
               <div className={styles.bar}>

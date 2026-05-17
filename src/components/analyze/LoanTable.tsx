@@ -8,7 +8,6 @@ import Drawer from '@/components/layout/Drawer'
 import Badge from '@/components/shared/Badge'
 import EmptyState from '@/components/shared/EmptyState'
 import ContextMenu from '@/components/shared/ContextMenu'
-import Tooltip from '@/components/shared/Tooltip'
 import Pagination from '@/components/shared/Pagination'
 import styles from './LoanTable.module.css'
 
@@ -80,9 +79,9 @@ export default function LoanTable() {
             <thead>
               <tr>
                 {colsToShow.map(col => (
-                  <Tooltip key={col.k} text={COL_DESCRIPTIONS[col.k] || col.l} position="bottom">
-                    <th onClick={() => handleSort(col)}>{col.l}</th>
-                  </Tooltip>
+                  <th key={col.k} title={COL_DESCRIPTIONS[col.k] || col.l} onClick={() => handleSort(col)}>
+                    {col.l}
+                  </th>
                 ))}
               </tr>
             </thead>
