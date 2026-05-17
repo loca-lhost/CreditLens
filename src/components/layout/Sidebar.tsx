@@ -82,9 +82,12 @@ export default function Sidebar() {
     <>
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
-          <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
-            <rect x="4" y="4" width="20" height="20" rx="4" stroke="currentColor" strokeWidth="2.2"/>
-            <path d="M8 12h12M8 16h8M8 20h6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
+          <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+            <line x1="22" y1="22" x2="28" y2="28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+            <circle cx="14" cy="14" r="9" stroke="currentColor" strokeWidth="2.5"/>
+            <rect x="9" y="16" width="2.5" height="4" rx="0.5" fill="currentColor" opacity="0.4"/>
+            <rect x="13" y="13" width="2.5" height="7" rx="0.5" fill="currentColor" opacity="0.6"/>
+            <rect x="17" y="10" width="2.5" height="10" rx="0.5" fill="currentColor"/>
           </svg>
           <span className={styles.logoText}>CreditLens</span>
         </div>
