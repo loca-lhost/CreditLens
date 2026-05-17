@@ -74,9 +74,9 @@ table.tbl thead th:hover {
   color: var(--text-muted);
 }
 
-table.tbl thead th.thc { color: var(--primary); }
-table.tbl thead th.thp { color: var(--accent); }
-table.tbl thead th.thg { color: var(--orange); }
+.headerCyan { color: var(--primary) !important; }
+.headerPurple { color: var(--accent) !important; }
+.headerGold { color: var(--orange) !important; }
 
 table.tbl thead th:first-child,
 table.tbl tbody td:first-child {

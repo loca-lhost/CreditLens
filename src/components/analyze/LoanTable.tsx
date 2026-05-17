@@ -13,6 +13,12 @@ import styles from './LoanTable.module.css'
 
 const PAGE_SIZE = 50
 
+const TH_CLASS_MAP: Record<string, string | undefined> = {
+  thc: styles.headerCyan,
+  thp: styles.headerPurple,
+  thg: styles.headerGold,
+};
+
 const COL_DESCRIPTIONS: Record<string, string> = {
   name: 'Borrower full name',
   repAcct: 'Repayment account number',
@@ -79,7 +85,7 @@ export default function LoanTable() {
             <thead>
               <tr>
                 {colsToShow.map(col => (
-                  <th key={col.k} title={COL_DESCRIPTIONS[col.k] || col.l} onClick={() => handleSort(col)} className={col.th ? styles[col.th] : undefined}>
+                  <th key={col.k} title={COL_DESCRIPTIONS[col.k] || col.l} onClick={() => handleSort(col)} className={TH_CLASS_MAP[col.th ?? '']}>
                     {col.l}
                   </th>
                 ))}
