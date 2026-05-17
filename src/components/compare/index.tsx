@@ -165,6 +165,12 @@ export default function ComparePage() {
 
   useEffect(() => { setCompPage(1) }, [filter, searchTerm])
 
+  useEffect(() => {
+    if (baseline.length > 0 && current.length > 0) {
+      runCompare()
+    }
+  }, [baseline.length, current.length, runCompare])
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
