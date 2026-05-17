@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import type { Loan, ColumnDef } from '@/types'
 import { usePortfolio, BUILTIN_COLS } from '@/context/PortfolioContext'
 import { getDPDBand } from '@/lib/filters'
@@ -7,8 +7,8 @@ import { generateXLSX } from '@/lib/export'
 import Drawer from '@/components/layout/Drawer'
 import Badge from '@/components/shared/Badge'
 import EmptyState from '@/components/shared/EmptyState'
-import ContextMenu from '@/components/shared/ContextMenu'
 import Pagination from '@/components/shared/Pagination'
+import cxStyles from '@/components/shared/ContextMenu.module.css'
 import styles from './LoanTable.module.css'
 
 const PAGE_SIZE = 50
@@ -45,6 +45,8 @@ function getCellValue(row: Loan, key: string): string | number {
 export default function LoanTable() {
   const { state, dispatch, filteredLoans } = usePortfolio()
   const [selectedLoan, setSelectedLoan] = useState<Loan | null>(null)
+  const [menuPos, setMenuPos] = useState<{ x: number; y: number; row: Loan } | null>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   const colsToShow = state.columns.filter(c => state.visibleCols.has(c.k))
   const totalPages = Math.max(1, Math.ceil(filteredLoans.length / PAGE_SIZE))
@@ -70,6 +72,31 @@ export default function LoanTable() {
   const handleExportRow = useCallback(async (row: Loan) => {
     generateXLSX([row], `CreditLens_${row.repAcct || row.name}_${Date.now()}.xlsx`)
   }, [])
+
+  const handleContextMenu = useCallback((e: React.MouseEvent, row: Loan) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setMenuPos({ x: e.clientX, y: e.clientY, row })
+  }, [])
+
+  const closeMenu = useCallback(() => setMenuPos(null), [])
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        closeMenu()
+      }
+    }
+    const keyHandler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu()
+    }
+    document.addEventListener('mousedown', handler)
+    document.addEventListener('keydown', keyHandler)
+    return () => {
+      document.removeEventListener('mousedown', handler)
+      document.removeEventListener('keydown', keyHandler)
+    }
+  }, [closeMenu])
 
   if (!state.dataLoaded) return null
 
@@ -108,75 +135,68 @@ export default function LoanTable() {
                     a => a.id === (row.applId || row.repAcct || row.name)
                   )
 
-                  const ctxItems = [
-                    { label: 'View Details', action: () => setSelectedLoan(row) },
-                    { label: 'Copy Account No.', action: () => handleCopy(row.repAcct || '') },
-                    { label: 'Copy Name', action: () => handleCopy(row.name) },
-                    { label: 'Export This Row', action: () => handleExportRow(row) },
-                  ]
-
                   return (
-                    <ContextMenu key={row.applId || row.repAcct || `${row.name}-${i}`} items={ctxItems}>
-                      <tr
-                        {...(band ? { 'data-dpd-band': band } : {})}
-                        onClick={() => setSelectedLoan(row)}
-                      >
-                        {colsToShow.map(col => {
-                          if (col.k.startsWith('dyn_')) {
-                            const idx = parseInt(col.k.split('_')[1])
-                            return (
-                              <td key={col.k} className={styles.mn}>
-                                {row._cells?.[idx] || ''}
-                              </td>
-                            )
-                          }
+                    <tr
+                      key={row.applId || row.repAcct || `${row.name}-${i}`}
+                      {...(band ? { 'data-dpd-band': band } : {})}
+                      onClick={() => setSelectedLoan(row)}
+                      onContextMenu={(e) => handleContextMenu(e, row)}
+                    >
+                      {colsToShow.map(col => {
+                        if (col.k.startsWith('dyn_')) {
+                          const idx = parseInt(col.k.split('_')[1])
+                          return (
+                            <td key={col.k} className={styles.mn}>
+                              {row._cells?.[idx] || ''}
+                            </td>
+                          )
+                        }
 
-                          const v = getCellValue(row, col.k)
+                        const v = getCellValue(row, col.k)
 
-                          if (col.daysCol) {
-                            const n = typeof v === 'number' ? v : null
-                            if (n === null || v === undefined) {
-                              return <td key={col.k} className={styles.dash}>—</td>
-                            }
-                            if (n < 0) {
-                              return <td key={col.k} style={{ color: 'var(--red)', fontWeight: 700 }}>{Math.abs(n)}d overdue</td>
-                            }
-                            if (n === 0) {
-                              return <td key={col.k} style={{ color: 'var(--red)', fontWeight: 700 }}>Today</td>
-                            }
-                            if (n <= 7) {
-                              return <td key={col.k} style={{ color: 'var(--orange)', fontWeight: 600 }}>{n}d</td>
-                            }
-                            return <td key={col.k} className={styles.mn}>{n}d</td>
-                          }
-
-                          if (col.badge) {
-                            return <td key={col.k}><Badge type={row.type}>{String(v || '—')}</Badge></td>
-                          }
-
-                          if (col.num) {
-                            const n = typeof v === 'number' ? v : 0
-                            if (n > 0) return <td key={col.k} className={styles[col.cls || '']}>{fmt(n)}</td>
+                        if (col.daysCol) {
+                          const n = typeof v === 'number' ? v : null
+                          if (n === null || v === undefined) {
                             return <td key={col.k} className={styles.dash}>—</td>
                           }
-
-                          if (col.k === 'name') {
-                            return (
-                              <td key={col.k} className={styles.mn}>
-                                {v || '—'}
-                                {loanAnomalies.length > 0 && (
-                                  <span className={styles.anomalyBadge} title={loanAnomalies.map(a => a.desc).join(' | ')}>
-                                    {loanAnomalies.length > 1 ? loanAnomalies.length : '⚠'}
-                                  </span>
-                                )}
-                              </td>
-                            )
+                          if (n < 0) {
+                            return <td key={col.k} style={{ color: 'var(--red)', fontWeight: 700 }}>{Math.abs(n)}d overdue</td>
                           }
+                          if (n === 0) {
+                            return <td key={col.k} style={{ color: 'var(--red)', fontWeight: 700 }}>Today</td>
+                          }
+                          if (n <= 7) {
+                            return <td key={col.k} style={{ color: 'var(--orange)', fontWeight: 600 }}>{n}d</td>
+                          }
+                          return <td key={col.k} className={styles.mn}>{n}d</td>
+                        }
 
-                          return <td key={col.k} className={styles[col.cls || 'mn']}>{v || '—'}</td>
-                        })}
-                      </tr>
-                    </ContextMenu>
+                        if (col.badge) {
+                          return <td key={col.k}><Badge type={row.type}>{String(v || '—')}</Badge></td>
+                        }
+
+                        if (col.num) {
+                          const n = typeof v === 'number' ? v : 0
+                          if (n > 0) return <td key={col.k} className={styles[col.cls || '']}>{fmt(n)}</td>
+                          return <td key={col.k} className={styles.dash}>—</td>
+                        }
+
+                        if (col.k === 'name') {
+                          return (
+                            <td key={col.k} className={styles.mn}>
+                              {v || '—'}
+                              {loanAnomalies.length > 0 && (
+                                <span className={styles.anomalyBadge} title={loanAnomalies.map(a => a.desc).join(' | ')}>
+                                  {loanAnomalies.length > 1 ? loanAnomalies.length : '⚠'}
+                                </span>
+                              )}
+                            </td>
+                          )
+                        }
+
+                        return <td key={col.k} className={styles[col.cls || 'mn']}>{v || '—'}</td>
+                      })}
+                    </tr>
                   )
                 })
               )}
@@ -192,6 +212,19 @@ export default function LoanTable() {
         />
       </div>
       <Drawer loan={selectedLoan} onClose={() => setSelectedLoan(null)} />
+
+      {menuPos && (
+        <div
+          ref={menuRef}
+          className={cxStyles.menu}
+          style={{ left: menuPos.x, top: menuPos.y, position: 'fixed' }}
+        >
+          <button className={cxStyles.item} onClick={() => { setSelectedLoan(menuPos.row); closeMenu() }}>View Details</button>
+          <button className={cxStyles.item} onClick={() => { handleCopy(menuPos.row.repAcct || ''); closeMenu() }}>Copy Account No.</button>
+          <button className={cxStyles.item} onClick={() => { handleCopy(menuPos.row.name); closeMenu() }}>Copy Name</button>
+          <button className={cxStyles.item} onClick={() => { handleExportRow(menuPos.row); closeMenu() }}>Export This Row</button>
+        </div>
+      )}
     </>
   )
 }
