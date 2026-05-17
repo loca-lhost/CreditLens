@@ -79,7 +79,7 @@ export default function LoanTable() {
             <thead>
               <tr>
                 {colsToShow.map(col => (
-                  <th key={col.k} title={COL_DESCRIPTIONS[col.k] || col.l} onClick={() => handleSort(col)}>
+                  <th key={col.k} title={COL_DESCRIPTIONS[col.k] || col.l} onClick={() => handleSort(col)} className={col.th ? styles[col.th] : undefined}>
                     {col.l}
                   </th>
                 ))}

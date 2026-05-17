@@ -1,10 +1,10 @@
 .pw {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: var(--r-xl);
+  border-radius: var(--rl);
   overflow: hidden;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-xs);
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
 }
 
 .ph {
@@ -49,32 +49,34 @@ table.tbl {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 0.8125rem;
+  font-size: 0.84375rem;
 }
 
 table.tbl thead th {
   position: sticky;
   top: 0;
   background: var(--bg-muted);
-  padding: 10px 16px;
+  padding: 11px 18px;
   text-align: left;
   font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--text-faint);
   border-bottom: 1px solid var(--border);
   z-index: 10;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
-  transition: var(--transition-snappy);
 }
 
 table.tbl thead th:hover {
-  color: var(--text);
-  background: var(--border);
+  color: var(--text-muted);
 }
+
+table.tbl thead th.thc { color: var(--primary); }
+table.tbl thead th.thp { color: var(--accent); }
+table.tbl thead th.thg { color: var(--orange); }
 
 table.tbl thead th:first-child,
 table.tbl tbody td:first-child {
@@ -92,15 +94,23 @@ table.tbl thead th:first-child {
 }
 
 table.tbl tbody td {
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-bottom: 1px solid var(--border);
   color: var(--text);
   transition: background 0.1s;
 }
 
+table.tbl tbody tr:nth-child(even) td {
+  background: rgba(0, 0, 0, 0.016);
+}
+
 table.tbl tbody tr:hover td {
   background: var(--primary-light);
   cursor: pointer;
+}
+
+table.tbl tbody tr:nth-child(even):hover td {
+  background: var(--primary-light);
 }
 
 table.tbl tbody tr:hover td:first-child {
@@ -124,7 +134,7 @@ table.tbl tbody tr[data-dpd-band="critical"] td:first-child {
 }
 
 table.tbl tbody tr[data-dpd-band="critical"] td {
-  background: var(--red-light);
+  background: rgba(220, 38, 38, 0.03);
 }
 
 table.tbl tbody tr[data-dpd-band="critical"]:hover td {
