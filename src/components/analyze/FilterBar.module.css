@@ -1,0 +1,238 @@
+.fb {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-xs);
+}
+
+.fbh {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fbt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.fsi {
+  flex: 1;
+  min-width: 160px;
+  padding: 8px 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition-snappy);
+}
+
+.fsi:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.fselect {
+  padding: 8px 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  min-width: 160px;
+  transition: var(--transition-snappy);
+}
+
+.fselect:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.nlqWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--input-bg);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--r);
+  padding: 4px 4px 4px 10px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.nlqPrefix {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.nlqInput {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 0.8125rem;
+  color: var(--text);
+  min-width: 0;
+  font-family: var(--font-body);
+  padding: 7px 0;
+}
+
+.nlqBtn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-xs);
+  padding: 7px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-snappy);
+}
+
+.nlqBtn:hover {
+  background: var(--primary-hover);
+}
+
+.nlqBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.nlqSpinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+.loading .nlqSpinner {
+  display: inline-block;
+}
+
+.loading .nlqLabel {
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fps {
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fsum {
+  padding: 9px 16px;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.fn {
+  color: var(--text);
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.colToggle {
+  position: relative;
+  display: inline-block;
+}
+
+.colToggleBtn {
+  background: var(--bg-muted);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r);
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-snappy);
+  cursor: pointer;
+}
+
+.colToggleBtn:hover {
+  background: var(--border);
+  border-color: var(--text-muted);
+}
+
+.colDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r);
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 100;
+  display: none;
+  box-shadow: var(--shadow-lg);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.colDropdown.open {
+  display: block;
+}
+
+.colDropdown label {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.colDropdown label:hover {
+  background: var(--bg-muted);
+}
+
+.colDropdown input[type="checkbox"] {
+  accent-color: var(--primary);
+}

@@ -1,0 +1,25 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.trading  { background: var(--primary-light); color: var(--primary); }
+.agric    { background: var(--orange-light); color: var(--orange); }
+.salary   { background: var(--green-light); color: var(--green); }
+.property { background: var(--accent-light); color: var(--accent); }
+.vehicle  { background: var(--teal-light); color: var(--teal); }
+.sme      { background: var(--orange-light); color: var(--orange); }
+.personal { background: var(--red-light); color: var(--red); }
+.std      { background: var(--bg-muted); color: var(--text-muted); }
+
+.recovered { background: var(--green-light); color: var(--green); }
+.worsening { background: var(--red-light); color: var(--red); }
+.stable    { background: var(--accent-light); color: var(--accent); }
+.new       { background: var(--primary-light); color: var(--primary); }
+.resolved  { background: var(--orange-light); color: var(--orange); }

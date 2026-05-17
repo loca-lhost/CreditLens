@@ -1,0 +1,77 @@
+:root {
+  --primary:       #0066FF;
+  --primary-hover: #0052CC;
+  --primary-light: #E8F0FE;
+  --primary-mid:   #D0E0FD;
+
+  --red:          #E5484D; --red-light:    #FEF1F1;
+  --orange:       #FF8C00; --orange-light: #FFF4E5;
+  --green:        #30A46C; --green-light:  #E8FBF0;
+  --accent:       #8B5CF6; --accent-light: #F3F0FF;
+  --teal:         #0EA5E9; --teal-light:   #E0F7FE;
+  --yellow:       #FACC15; --yellow-light: #FFFBE6;
+
+  --bg:        #FAFBFC;
+  --bg-muted:  #F1F3F5;
+  --bg-elevated: #FFFFFF;
+  --card-bg:   #FFFFFF;
+  --input-bg:  #FFFFFF;
+
+  --dark:       #0F172A;
+  --text:       #1E293B;
+  --text-muted: #64748B;
+  --text-faint: #94A3B8;
+
+  --border:       #E2E8F0;
+  --border-hover: #CBD5E1;
+  --border-focus: #93C5FD;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+  --shadow-primary: 0 4px 14px rgba(0,102,255,0.18);
+
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+
+  --r-xs: 4px;  --r-sm: 6px;  --r: 8px;  --rl: 10px;  --r-xl: 12px;  --r-2xl: 16px;
+
+  --ease:              cubic-bezier(0.16, 1, 0.3, 1);
+  --transition:        all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-snappy: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow:   all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  --secondary: var(--green);  --cyan: var(--teal);  --bx: var(--primary-hover);
+  --gold: var(--orange);  --purple: var(--accent);  --success: var(--green);  --danger: var(--red);
+  --t1: var(--text);  --t2: var(--text-muted);  --t3: var(--text-faint);
+  --b: var(--border);  --bh: var(--border-hover);
+  --s1: var(--bg-muted);  --s2: var(--card-bg);  --s3: var(--input-bg);  --s4: var(--border);
+  --cd: var(--primary-light);  --gs: var(--orange-light);  --ds: var(--red-light);
+  --ss: var(--green-light);    --ps2: var(--accent-light);  --success-light: var(--green-light);
+  --cv: var(--primary);  --dv: var(--red);  --pv: var(--accent);  --gv: var(--orange);  --tcv: var(--primary);
+}
+
+[data-theme="dark"] {
+  --bg: #0B1121; --bg-muted: #111827; --bg-elevated: #1F2937; --card-bg: #1F2937; --input-bg: #111827;
+  --dark: #F8FAFC; --text: #E2E8F0; --text-muted: #94A3B8; --text-faint: #64748B;
+  --border: #1E293B; --border-hover: #334155; --border-focus: #3B82F6;
+  --primary-light: rgba(0,102,255,0.15); --primary-mid: rgba(0,102,255,0.25);
+  --red-light: rgba(229,72,77,0.12); --orange-light: rgba(255,140,0,0.12);
+  --green-light: rgba(48,164,108,0.12); --accent-light: rgba(139,92,246,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.5); --shadow-xl: 0 20px 30px rgba(0,0,0,0.6);
+}
+
+[data-theme="midnight"] {
+  --bg: #000000; --bg-muted: #0A0A0A; --bg-elevated: #111111; --card-bg: #111111; --input-bg: #0A0A0A;
+  --dark: #FFFFFF; --text: #E5E5E5; --text-muted: #737373; --text-faint: #404040;
+  --border: #1A1A1A; --border-hover: #262626; --border-focus: #3B82F6;
+  --primary-light: rgba(0,102,255,0.12); --primary-mid: rgba(0,102,255,0.20);
+  --red-light: rgba(229,72,77,0.10); --orange-light: rgba(255,140,0,0.10);
+  --green-light: rgba(48,164,108,0.10); --accent-light: rgba(139,92,246,0.10);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4); --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.6); --shadow-xl: 0 20px 30px rgba(0,0,0,0.7);
+}

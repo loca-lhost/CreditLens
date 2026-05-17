@@ -1,0 +1,32 @@
+﻿  openrouter: {
+    label: 'OpenRouter',
+    keyStore: 'creditlens_openrouter_key',
+    placeholder: 'sk-or-...',
+    hint: 'Get a free key at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a>. Multiple free models available.',
+    model: 'meta-llama/llama-3.3-70b-instruct',
+    async call(key, prompt, opts) {
+      const url = 'https://openrouter.ai/api/v1/chat/completions'
+      const body = {
+        model: this.model,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: opts.temperature ?? 0.4,
+        max_tokens: opts.maxTokens ?? 512,
+      }
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': ${'$'}{key},
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'CreditLens',
+        },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error?.message || ${'$'}{res.status})
+      }
+      const data = await res.json()
+      return data.choices?.[0]?.message?.content || ''
+    },
+  },

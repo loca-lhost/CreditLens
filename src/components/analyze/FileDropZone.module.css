@@ -1,0 +1,62 @@
+.dz {
+  border: 1.5px dashed var(--border); border-radius: var(--r-xl);
+  background: var(--card-bg); padding: 56px 40px; text-align: center;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: var(--transition-snappy);
+}
+.dz:hover, .over { border-color: var(--primary); background: var(--primary-light); border-style: solid; }
+
+.icon {
+  width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 16px;
+  background: var(--primary-light); display: flex; align-items: center; justify-content: center;
+  color: var(--primary); transition: var(--transition);
+}
+.dz:hover .icon { transform: scale(1.1); box-shadow: 0 0 20px var(--primary-light); }
+
+.title { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--dark); }
+.sub { font-size: 15px; color: var(--text-muted); }
+.sub b { color: var(--primary); font-weight: 700; cursor: pointer; }
+
+.small { padding: 32px 24px; }
+.smallTitle { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.smallSub { font-size: 13px; color: var(--text-muted); }
+.smallSub b { color: var(--primary); cursor: pointer; font-weight: 700; }
+
+.banner {
+  padding: 14px 20px; background: var(--bg-muted);
+  border: 1px solid var(--border); border-radius: 14px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.bannerText { font-size: 13px; color: var(--text); flex: 1; }
+.bannerText strong { font-weight: 700; }
+
+.compareLabel {
+  font-size: 14px; font-weight: 700; color: var(--dark);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.compareGrid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+}
+@media (max-width: 1024px) { .compareGrid { grid-template-columns: 1fr; } }
+
+.disabled { pointer-events: none; opacity: 0.6; }
+
+.skeletonWrap {
+  margin-top: 24px;
+}
+
+.skeletonStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.skeletonTable {
+  padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+}

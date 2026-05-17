@@ -1,0 +1,160 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 3999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: -460px;
+  width: 440px;
+  height: 100vh;
+  background: var(--card-bg);
+  border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-xl);
+  z-index: 4000;
+  transition: right 0.25s var(--ease);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.open {
+  right: 0;
+}
+
+.topBar {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--card-bg);
+  z-index: 1;
+}
+
+.topTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.topSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.closeBtn {
+  color: var(--text-muted);
+  cursor: pointer;
+  background: var(--bg-muted);
+  border: none;
+  padding: 6px;
+  border-radius: var(--r);
+  transition: var(--transition-snappy);
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.list {
+  padding: 16px;
+  flex: 1;
+}
+
+.card {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  margin-bottom: 8px;
+  background: var(--card-bg);
+  transition: var(--transition-snappy);
+  box-shadow: var(--shadow-xs);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+}
+
+.filename {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.date {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.metaLabel {
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.metaValue {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  padding: 8px 0;
+  line-height: 1.6;
+}

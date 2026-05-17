@@ -1,0 +1,158 @@
+.pw {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-xs);
+}
+
+.ph {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.ptb {
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+.rl {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.ts {
+  overflow-x: auto;
+  background: var(--card-bg);
+}
+
+table.tbl {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8125rem;
+}
+
+table.tbl thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-muted);
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  transition: var(--transition-snappy);
+}
+
+table.tbl thead th:hover {
+  color: var(--text);
+  background: var(--border);
+}
+
+table.tbl thead th:first-child,
+table.tbl tbody td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: var(--card-bg);
+  box-shadow: 1px 0 0 var(--border);
+}
+
+table.tbl thead th:first-child {
+  z-index: 15;
+  background: var(--bg-muted);
+  box-shadow: 1px 0 0 var(--border);
+}
+
+table.tbl tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  transition: background 0.1s;
+}
+
+table.tbl tbody tr:hover td {
+  background: var(--primary-light);
+  cursor: pointer;
+}
+
+table.tbl tbody tr:hover td:first-child {
+  background: var(--primary-light);
+}
+
+table.tbl tbody tr[data-dpd-band="low"] td:first-child {
+  border-left: 3px solid var(--green);
+}
+
+table.tbl tbody tr[data-dpd-band="med"] td:first-child {
+  border-left: 3px solid var(--orange);
+}
+
+table.tbl tbody tr[data-dpd-band="high"] td:first-child {
+  border-left: 3px solid var(--red);
+}
+
+table.tbl tbody tr[data-dpd-band="critical"] td:first-child {
+  border-left: 3px solid #991B1B;
+}
+
+table.tbl tbody tr[data-dpd-band="critical"] td {
+  background: var(--red-light);
+}
+
+table.tbl tbody tr[data-dpd-band="critical"]:hover td {
+  background: var(--primary-light);
+}
+
+.mn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.dash {
+  color: var(--text-faint);
+}
+
+.tdv { color: var(--red); }
+.tcv { color: var(--primary); }
+.tpv { color: var(--accent); }
+.tgv { color: var(--orange); }
+
+.anomalyBadge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--red);
+  background: var(--red-light);
+  padding: 1px 6px;
+  border-radius: 999px;
+  margin-left: 6px;
+}

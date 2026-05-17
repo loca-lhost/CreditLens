@@ -1,0 +1,78 @@
+.wrap {
+  margin-bottom: 24px;
+}
+
+.products {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.typeBadge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: var(--r-xs);
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.trading  { background: var(--primary-light); color: var(--primary); }
+.agric    { background: var(--orange-light); color: var(--orange); }
+.salary   { background: var(--green-light); color: var(--green); }
+.property { background: var(--accent-light); color: var(--accent); }
+.vehicle  { background: var(--teal-light); color: var(--teal); }
+.sme      { background: var(--orange-light); color: var(--orange); }
+.personal { background: var(--red-light); color: var(--red); }
+.std      { background: var(--bg-muted); color: var(--text-muted); }
+
+.nameLabel {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  white-space: normal;
+  color: var(--text-muted);
+}
+
+.countValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.overdueText {
+  font-size: 0.6875rem;
+  color: var(--red);
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}
+
+.noOverdue {
+  font-size: 0.6875rem;
+  color: var(--green);
+  font-weight: 500;
+}
+
+.bar {
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 10px;
+  background: var(--bg-muted);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s var(--ease);
+}
+
+.pctLabel {
+  font-size: 0.625rem;
+  color: var(--text-faint);
+  margin-top: -6px;
+}
+
+.statProduct:hover {
+  transform: translateY(-1px);
+}

@@ -1,0 +1,46 @@
+.card {
+  background: var(--card-bg); border: 1px solid var(--primary-mid);
+  border-radius: var(--rl); padding: 20px 22px; margin-bottom: 24px;
+  box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+}
+.card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+
+.header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  font-size: 11px; font-weight: 700; color: var(--primary);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+
+.body { font-size: 13.5px; line-height: 1.8; color: var(--text); }
+
+.footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);
+}
+
+.timestamp { font-size: 11px; color: var(--text-faint); font-style: italic; }
+
+.actions { display: flex; gap: 12px; margin-top: 20px; }
+
+.actionBtn {
+  background: var(--bg-muted); border: 1px solid var(--border);
+  color: var(--text-muted); font-size: 12.5px; font-weight: 500;
+  padding: 7px 14px; border-radius: var(--r-sm); cursor: pointer;
+  transition: var(--transition-snappy); font-family: inherit;
+}
+.actionBtn:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+
+.skeleton {
+  height: 80px;
+  background: linear-gradient(90deg, var(--bg-muted) 25%, var(--border) 50%, var(--bg-muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.error { color: var(--red); font-size: 14px; font-weight: 500; }
