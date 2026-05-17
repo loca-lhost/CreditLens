@@ -128,7 +128,6 @@ export function processRawData(
     const maturityDate = g(localCI.maturityDate)
     const rawTerm = g(localCI.term)
     const rawCommit = g(localCI.commitment)
-    const rawPrinc = g(localCI.principal)
     const rawRate = g(localCI.interestRate)
     const rawDue = g(localCI.dueToday)
     const rawOv = g(localCI.overdue)
@@ -138,7 +137,6 @@ export function processRawData(
     const validOpeningDate = validateDate(openingDate)
     const validMaturityDate = validateDate(maturityDate)
     const commit = pNum(rawCommit)
-    const principal = pNum(rawPrinc)
     const rate = pNum(rawRate)
 
     let dupKey: string
@@ -169,7 +167,7 @@ export function processRawData(
 
     const type = getType(productName)
     const termMo = toMo(rawTerm)
-    const rep = computeRep(principal, rate, termMo, type)
+    const rep = computeRep(commit, rate, termMo, type)
     const dpd = calculateDPD(
       validOpeningDate || openingDate,
       validMaturityDate || maturityDate,

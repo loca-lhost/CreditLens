@@ -8,7 +8,6 @@ import LogPanel from '@/components/layout/LogPanel'
 import FilterBar from './FilterBar'
 import LoanTable from './LoanTable'
 import Toolbar from './Toolbar'
-import BulkImport from './BulkImport'
 import ScheduleSection from './ScheduleSection'
 import AICard from '@/components/shared/AICard'
 import { generatePortfolioInsight } from '@/lib/ai/insights'
@@ -28,7 +27,6 @@ export default function AnalyzePage() {
   const [aiContent, setAiContent] = useState<string | null>(null)
   const [aiLoading, setAiLoading] = useState(false)
   const [aiError, setAiError] = useState<string | null>(null)
-  const [bulkOpen, setBulkOpen] = useState(false)
 
   const generateInsight = useCallback(() => {
     setAiLoading(true)
@@ -71,8 +69,7 @@ export default function AnalyzePage() {
           <LogPanel entries={state.logEntries} />
           <FilterBar />
           <LoanTable />
-          <Toolbar onBulkImport={() => setBulkOpen(true)} />
-          <BulkImport open={bulkOpen} onClose={() => setBulkOpen(false)} />
+          <Toolbar />
           <ScheduleSection />
         </>
       )}

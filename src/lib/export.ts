@@ -46,13 +46,26 @@ export async function generateXLSX(rows: Loan[], filename: string) {
   XLSX.writeFile(wb, filename)
 }
 
-export function generateCSVText(rows: Loan[]): string {
+export function generateCSVText(rows: Loan[], simple?: boolean): string {
   function txtCell(val: unknown): string {
     const s = (val === null || val === undefined ? '' : String(val))
       .replace(/[\r\n]/g, ' ')
       .replace(/^,+|,+$/g, '')
       .trim()
     return s.includes(',') ? '"' + s.replace(/"/g, '""') + '"' : s
+  }
+
+  if (simple) {
+    const lines = [['Account', 'Name', 'Arrears', 'DPD'].join(',')]
+    rows.forEach(row => {
+      lines.push([
+        txtCell(row.repAcct || ''),
+        txtCell(row.name || ''),
+        txtCell(row.overdue > 0 ? parseFloat(row.overdue.toFixed(2)) : 0),
+        txtCell(row.dpd > 0 ? row.dpd : 0),
+      ].join(','))
+    })
+    return lines.join('\r\n')
   }
 
   const headers = ['Account', 'Name', 'Arrears', 'DPD', 'Class', 'Loan ID', 'Next Instalment (days)', 'Officer']
