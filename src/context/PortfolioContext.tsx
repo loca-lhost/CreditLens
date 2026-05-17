@@ -92,6 +92,21 @@ function createInitialNLQFilters(): NLQFilters {
   }
 }
 
+function getInitialVisibleCols(): Set<string> {
+  try {
+    const saved = localStorage.getItem('creditlens_visible_cols')
+    if (saved) {
+      const parsed = JSON.parse(saved) as string[]
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return new Set(parsed.filter(k => BUILTIN_COLS.some(c => c.k === k)))
+      }
+    }
+  } catch {
+    // ignore bad data
+  }
+  return new Set(BUILTIN_COLS.map(c => c.k))
+}
+
 const initialState: PortfolioState = {
   loans: [],
   meta: {},
@@ -106,7 +121,7 @@ const initialState: PortfolioState = {
   officerMap: {},
   anomalyFilter: false,
   anomalies: [],
-  visibleCols: new Set(BUILTIN_COLS.map(c => c.k)),
+  visibleCols: getInitialVisibleCols(),
   columns: [...BUILTIN_COLS],
   allHeaders: [],
   visibleRows: ROWS_PER_LOAD,
@@ -235,8 +250,6 @@ function portfolioReducer(state: PortfolioState, action: PortfolioAction): Portf
         allHeaders: action.headers,
       }
     }
-    case 'SET_OFFICER_FILTER':
-      return { ...state, officerFilter: action.officer }
     default:
       return state
   }

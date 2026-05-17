@@ -6,6 +6,7 @@ import { generateSchedule as genSchedule } from '@/lib/schedule'
 import { generateExportSummary } from '@/lib/ai/insights'
 import { openPrintSummary } from '@/lib/print'
 import Button from '@/components/shared/Button'
+import Dialog from '@/components/layout/Dialog'
 import styles from './Toolbar.module.css'
 
 type ExportFormat = 'xlsx' | 'csv' | 'text'
@@ -19,6 +20,7 @@ export default function Toolbar() {
   const [exporting, setExporting] = useState(false)
   const [exportFormat, setExportFormat] = useState<ExportFormat>('xlsx')
   const [formatOpen, setFormatOpen] = useState(false)
+  const [showResetDialog, setShowResetDialog] = useState(false)
   const colRef = useRef<HTMLDivElement>(null)
   const formatRef = useRef<HTMLDivElement>(null)
 
@@ -96,7 +98,12 @@ export default function Toolbar() {
   }, [state.loans, dispatch, showToast])
 
   const handleReset = useCallback(() => {
+    setShowResetDialog(true)
+  }, [])
+
+  const confirmReset = useCallback(() => {
     dispatch({ type: 'CLEAR_DATA' })
+    setShowResetDialog(false)
     showToast('Application reset', 'ok')
   }, [dispatch, showToast])
 
@@ -193,6 +200,14 @@ export default function Toolbar() {
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M3 12a9 9 0 109-9M3 3v4h4"/></svg>
         Reset
       </Button>
+      <Dialog
+        open={showResetDialog}
+        title="Confirm Reset"
+        message="This will clear all data including Analyze and Compare. Continue?"
+        confirmLabel="Reset"
+        onConfirm={confirmReset}
+        onCancel={() => setShowResetDialog(false)}
+      />
     </div>
   )
 }

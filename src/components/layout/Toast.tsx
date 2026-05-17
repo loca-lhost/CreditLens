@@ -6,7 +6,7 @@ export default function Toast() {
   if (!toast) return null
 
   return (
-    <div className={`${styles.toast} ${styles[toast.type]}`}>
+    <div className={`${styles.toast} ${styles[toast.type]}`} role="status" aria-live="polite">
       {toast.message}
     </div>
   )

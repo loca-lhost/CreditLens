@@ -25,6 +25,8 @@ function getInitialTheme(): Theme {
   const saved = localStorage.getItem('creditlens_theme')
   if (saved === 'dark') return 'dark'
   if (saved === 'midnight') return 'midnight'
+  if (saved === 'light') return 'light'
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark'
   return 'light'
 }
 

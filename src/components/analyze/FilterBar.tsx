@@ -67,6 +67,27 @@ export default function FilterBar() {
     dispatch({ type: 'TOGGLE_ANOMALY' })
   }, [dispatch])
 
+  const clearAllFilters = useCallback(() => {
+    dispatch({ type: 'SET_SEARCH', term: '' })
+    dispatch({ type: 'SET_PRODUCT', product: '__ALL__' })
+    dispatch({ type: 'SET_ACTIVE_FILTER', filter: 'all' })
+    dispatch({ type: 'SET_NLQ_FILTERS', filters: {
+      product: null, minCommit: null, maxCommit: null, minDPD: null, maxDPD: null,
+      overdueOnly: false, maturityDays: null, maturityMonths: null,
+      maturityThisMonth: false, maturityNextMonth: false,
+      minOverdue: null, maxOverdue: null, officer: null,
+      maxDaysToNext: null, instalmentOverdue: false,
+      openedAfter: null, openedBefore: null, loanClass: null, borrowerName: null,
+    }})
+    dispatch({ type: 'SET_OFFICER_FILTER', officer: '' })
+    setNlqText('')
+  }, [dispatch])
+
+  const hasActiveFilters = state.searchTerm || state.activeFilter !== 'all' ||
+    state.selectedProduct !== '__ALL__' || state.approachingMaturity ||
+    state.anomalyFilter || state.officerFilter ||
+    Object.values(state.nlqFilters).some(v => v !== null && v !== false)
+
   const officerOptions = [...new Set(state.loans.map(r => r.officer || '').filter(Boolean))].sort()
 
   const builtinKeys = BUILTIN_COLS.map(c => c.k)
@@ -95,7 +116,7 @@ export default function FilterBar() {
         <input
           type="text"
           className={styles.fsi}
-          placeholder="Search by borrower name..."
+          placeholder="Search by name, account, product, or officer..."
           value={state.searchTerm}
           onChange={handleSearch}
         />
@@ -151,6 +172,11 @@ export default function FilterBar() {
           <FilterPill active={state.anomalyFilter} onClick={toggleAnomaly} count={state.anomalies.length}>
             Anomalies
           </FilterPill>
+        )}
+        {hasActiveFilters && (
+          <button className={styles.clearAllBtn} onClick={clearAllFilters}>
+            Clear All
+          </button>
         )}
       </div>
 

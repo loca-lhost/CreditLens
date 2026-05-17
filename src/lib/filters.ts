@@ -103,7 +103,13 @@ export function filterLoans(
 
   if (searchTerm) {
     const term = searchTerm.toLowerCase()
-    result = result.filter(r => r.name.toLowerCase().includes(term))
+    result = result.filter(r =>
+      r.name.toLowerCase().includes(term) ||
+      (r.repAcct || '').toLowerCase().includes(term) ||
+      (r.productName || '').toLowerCase().includes(term) ||
+      (r.officer || '').toLowerCase().includes(term) ||
+      (r.applId || '').toLowerCase().includes(term)
+    )
   }
 
   if (nlqFilters) {

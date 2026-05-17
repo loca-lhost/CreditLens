@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { usePortfolio } from '@/context/PortfolioContext'
 import { getProductColor, TYPE_LABELS, resetProductColors } from '@/lib/colors'
 import { fmt } from '@/lib/parser'
@@ -7,9 +8,11 @@ import statsStyles from './StatsRow.module.css'
 export default function ProductBreakdown() {
   const { productStats, totalCommit, state, dispatch } = usePortfolio()
 
-  if (!state.dataLoaded || Object.keys(productStats).length === 0) return null
+  useEffect(() => {
+    resetProductColors()
+  }, [state.loans])
 
-  resetProductColors()
+  if (!state.dataLoaded || Object.keys(productStats).length === 0) return null
 
   const sorted = Object.entries(productStats).sort(([an, av], [bn, bv]) => {
     const order: Record<string, number> = { trading: 0, agric: 1, std: 2 }

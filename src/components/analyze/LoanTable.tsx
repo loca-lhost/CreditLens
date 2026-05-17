@@ -112,7 +112,16 @@ export default function LoanTable() {
             <thead>
               <tr>
                 {colsToShow.map(col => (
-                  <th key={col.k} title={COL_DESCRIPTIONS[col.k] || col.l} onClick={() => handleSort(col)} className={TH_CLASS_MAP[col.th ?? '']}>
+                  <th
+                    key={col.k}
+                    title={COL_DESCRIPTIONS[col.k] || col.l}
+                    onClick={() => handleSort(col)}
+                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort(col) } }}
+                    className={TH_CLASS_MAP[col.th ?? '']}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Sort by ${col.l}`}
+                  >
                     {col.l}
                   </th>
                 ))}
@@ -217,7 +226,11 @@ export default function LoanTable() {
         <div
           ref={menuRef}
           className={cxStyles.menu}
-          style={{ left: menuPos.x, top: menuPos.y, position: 'fixed' }}
+          style={{
+            left: Math.min(menuPos.x, window.innerWidth - 200),
+            top: Math.min(menuPos.y, window.innerHeight - 160),
+            position: 'fixed',
+          }}
         >
           <button className={cxStyles.item} onClick={() => { setSelectedLoan(menuPos.row); closeMenu() }}>View Details</button>
           <button className={cxStyles.item} onClick={() => { handleCopy(menuPos.row.repAcct || ''); closeMenu() }}>Copy Account No.</button>

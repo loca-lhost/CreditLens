@@ -185,7 +185,8 @@ export default function SettingsPage() {
             onChange={e => { setProvider(e.target.value as 'gemini' | 'groq'); setInputKey('') }}
           >
             <option value="gemini">Google Gemini (Flash Lite)</option>
-            <option value="groq">Groq (Llama 3.3 70B)</option>`n            <option value="openrouter">OpenRouter (Multiple Free Models)</option>
+            <option value="groq">Groq (Llama 3.3 70B)</option>
+            <option value="openrouter">OpenRouter (Multiple Free Models)</option>
           </select>
         </div>
         <div className={styles.field}>

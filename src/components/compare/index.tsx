@@ -340,15 +340,19 @@ export default function ComparePage() {
 }
 
 function FileDropCompare({ label, onFile }: { label: string; onFile: (f: File) => void }) {
+  const [over, setOver] = useState(false)
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
+    setOver(false)
     if (e.dataTransfer.files.length) onFile(e.dataTransfer.files[0])
   }
 
   return (
     <div
-      className={`${dropStyles.dz} ${dropStyles.small}`}
-      onDragOver={e => e.preventDefault()}
+      className={`${dropStyles.dz} ${dropStyles.small} ${over ? dropStyles.over : ''}`}
+      onDragOver={e => { e.preventDefault(); setOver(true) }}
+      onDragLeave={() => setOver(false)}
       onDrop={handleDrop}
       onClick={() => {
         const input = document.createElement('input')
